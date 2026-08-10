@@ -25,11 +25,14 @@ import com.hjq.demo.ui.dialog.common.ShareDialog;
 import com.hjq.demo.ui.dialog.common.TimeDialog;
 import com.hjq.demo.ui.dialog.common.TipsDialog;
 import com.hjq.demo.ui.dialog.common.WaitDialog;
+import com.hjq.demo.ui.dialog.common.FileDialog;
 import com.hjq.demo.ui.popup.ListPopup;
 import com.hjq.umeng.sdk.Platform;
 import com.hjq.umeng.sdk.UmengShare;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -65,7 +68,10 @@ public final class DialogActivity extends AppActivity {
                 R.id.btn_dialog_date, R.id.btn_dialog_time,
                 R.id.btn_dialog_update, R.id.btn_dialog_share,
                 R.id.btn_dialog_safe, R.id.btn_dialog_custom,
-                R.id.btn_dialog_multi);
+                R.id.btn_dialog_multi, R.id.btn_dialog_file,
+                R.id.btn_dialog_file_image, R.id.btn_dialog_file_txt,
+                R.id.btn_dialog_file_video, R.id.btn_dialog_file_apk,
+                R.id.btn_dialog_folder);
     }
 
     @Override
@@ -524,6 +530,164 @@ public final class DialogActivity extends AppActivity {
             DialogManager.getInstance(this).addDialog(dialog2);
             DialogManager.getInstance(this).addDialog(dialog3);
             DialogManager.getInstance(this).startShow();
+
+        } else if (viewId == R.id.btn_dialog_file) {
+
+            new FileDialog.Builder(this)
+                    .setListener(new FileDialog.OnListener() {
+
+                        @Override
+                        public void onConfirm(@NonNull BaseDialog dialog, File file) {
+                            if (file == null) {
+                                toast("未选择文件");
+                                return;
+                            }
+                            toast("选择了文件:\n" + file.getAbsolutePath());
+                        }
+
+                        @Override
+                        public void onCancel(@NonNull BaseDialog dialog) {
+                            toast("取消了");
+                        }
+                    })
+                    .show();
+
+        } else if (viewId == R.id.btn_dialog_file) {
+
+            new FileDialog.Builder(this)
+                    .setFilterType(FileDialog.Builder.FILTER_TYPE_ALL)
+                    .setListener(new FileDialog.OnListener() {
+
+                        @Override
+                        public void onConfirm(@NonNull BaseDialog dialog, File file) {
+                            if (file == null) {
+                                toast("未选择文件");
+                                return;
+                            }
+                            toast("选择了文件:\n" + file.getAbsolutePath());
+                        }
+
+                        @Override
+                        public void onCancel(@NonNull BaseDialog dialog) {
+                            toast("取消了");
+                        }
+                    })
+                    .show();
+
+        } else if (viewId == R.id.btn_dialog_file_image) {
+
+            new FileDialog.Builder(this)
+                    .setFilterType(FileDialog.Builder.FILTER_TYPE_IMAGE)
+                    .setListener(new FileDialog.OnListener() {
+
+                        @Override
+                        public void onConfirm(@NonNull BaseDialog dialog, File file) {
+                            if (file == null) {
+                                toast("未选择图片文件");
+                                return;
+                            }
+                            toast("选择了图片文件:\n" + file.getAbsolutePath());
+                        }
+
+                        @Override
+                        public void onCancel(@NonNull BaseDialog dialog) {
+                            toast("取消了");
+                        }
+                    })
+                    .show();
+
+        }else if (viewId == R.id.btn_dialog_file_apk) {
+
+            new FileDialog.Builder(this)
+                    .setFilterType(FileDialog.Builder.FILTER_TYPE_APP)
+                    .setListener(new FileDialog.OnListener() {
+
+                        @Override
+                        public void onConfirm(@NonNull BaseDialog dialog, File file) {
+                            if (file == null) {
+                                toast("未选择APP文件");
+                                return;
+                            }
+                            toast("选择了APP文件:\n" + file.getAbsolutePath());
+                        }
+
+                        @Override
+                        public void onCancel(@NonNull BaseDialog dialog) {
+                            toast("取消了");
+                        }
+                    })
+                    .show();
+
+        } else if (viewId == R.id.btn_dialog_file_txt) {
+
+            new FileDialog.Builder(this)
+                    .setFilterType(FileDialog.Builder.FILTER_TYPE_TXT)
+                    .setListener(new FileDialog.OnListener() {
+
+                        @Override
+                        public void onConfirm(@NonNull BaseDialog dialog, File file) {
+                            if (file == null) {
+                                toast("未选择文本文件");
+                                return;
+                            }
+                            toast("选择了文本文件:\n" + file.getAbsolutePath());
+                        }
+
+                        @Override
+                        public void onCancel(@NonNull BaseDialog dialog) {
+                            toast("取消了");
+                        }
+                    })
+                    .show();
+
+        } else if (viewId == R.id.btn_dialog_file_video) {
+
+            new FileDialog.Builder(this)
+                    .setFilterType(FileDialog.Builder.FILTER_TYPE_VIDEO)
+                    .setListener(new FileDialog.OnListener() {
+
+                        @Override
+                        public void onConfirm(@NonNull BaseDialog dialog, File file) {
+                            if (file == null) {
+                                toast("未选择视频文件");
+                                return;
+                            }
+                            toast("选择了视频文件:\n" + file.getAbsolutePath());
+                        }
+
+                        @Override
+                        public void onCancel(@NonNull BaseDialog dialog) {
+                            toast("取消了");
+                        }
+                    })
+                    .show();
+
+        } else if (viewId == R.id.btn_dialog_folder) {
+
+            new FileDialog.Builder(this)
+                    .setFilterType(FileDialog.Builder.FILTER_TYPE_FOLDER)
+                    .setListener(new FileDialog.OnListener() {
+
+                        @Override
+                        public void onConfirm(@NonNull BaseDialog dialog, File file) {
+                            if (file == null) {
+                                toast("未选择文件夹");
+                                return;
+                            }
+                            if (file.isDirectory()) {
+                                toast("选择了文件夹:\n" + file.getAbsolutePath());
+                            } else {
+                                toast("选择了文件:\n" + file.getAbsolutePath());
+                            }
+                        }
+
+                        @Override
+                        public void onCancel(@NonNull BaseDialog dialog) {
+                            toast("取消了");
+                        }
+                    })
+                    .show();
+
         }
     }
 
@@ -531,11 +695,11 @@ public final class DialogActivity extends AppActivity {
     public void onRightClick(TitleBar titleBar) {
         if (mListPopup == null) {
             mListPopup = new ListPopup.Builder(this)
-                .setList("选择拍照", "选取相册")
-                .addOnShowListener(popupWindow -> toast("PopupWindow 显示了"))
-                .addOnDismissListener(popupWindow -> toast("PopupWindow 销毁了"))
-                .setListener((ListPopup.OnListener<String>) (popupWindow, position, s) -> toast("点击了：" + s))
-                .create();
+                    .setList("选择拍照", "选取相册")
+                    .addOnShowListener(popupWindow -> toast("PopupWindow 显示了"))
+                    .addOnDismissListener(popupWindow -> toast("PopupWindow 销毁了"))
+                    .setListener((ListPopup.OnListener<String>) (popupWindow, position, s) -> toast("点击了：" + s))
+                    .create();
         }
         if (!mListPopup.isShowing()) {
             mListPopup.showAsDropDown(titleBar.getRightView());

@@ -1,8 +1,11 @@
 package com.hjq.demo.ui.fragment.home;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
+
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.hjq.demo.R;
 import com.hjq.demo.aop.SingleClick;
@@ -12,9 +15,13 @@ import com.hjq.demo.http.glide.GlideApp;
 import com.hjq.demo.permission.PermissionDescription;
 import com.hjq.demo.permission.PermissionInterceptor;
 import com.hjq.demo.ui.activity.HomeActivity;
+import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.XXPermissions;
 import com.hjq.permissions.permission.PermissionLists;
+import com.hjq.permissions.permission.base.IPermission;
 import com.hjq.smallest.width.SmallestWidthAdaptation;
+
+import java.util.List;
 
 /**
  *    author : Android 轮子哥
@@ -39,7 +46,7 @@ public final class HomeMessageFragment extends TitleBarFragment<HomeActivity> {
     protected void initView() {
         mImageView = findViewById(R.id.iv_home_message_image);
         setOnClickListener(R.id.btn_home_message_image1, R.id.btn_home_message_image2, R.id.btn_home_message_image3,
-                R.id.btn_home_message_toast, R.id.btn_home_message_permission, R.id.btn_home_message_setting,
+                R.id.btn_home_message_toast, R.id.btn_home_message_permission,R.id.btn_home_storage_permission, R.id.btn_home_message_setting,
                 R.id.btn_home_message_black, R.id.btn_home_message_white, R.id.btn_home_message_tab);
     }
 
@@ -89,6 +96,10 @@ public final class HomeMessageFragment extends TitleBarFragment<HomeActivity> {
 
             requestPermission();
 
+        } else if (viewId == R.id.btn_home_storage_permission) {
+
+            storagePermission();
+
         } else if (viewId == R.id.btn_home_message_setting) {
 
             XXPermissions.startPermissionActivity(this);
@@ -132,6 +143,24 @@ public final class HomeMessageFragment extends TitleBarFragment<HomeActivity> {
                         return;
                     }
                     toast("获取相机权限成功");
+                });
+    }
+
+    private void storagePermission() {
+        XXPermissions.with(requireContext())
+                // 适配分区存储应该这样写
+                //.permission(PermissionLists.getReadExternalStoragePermission())
+                //.permission(PermissionLists.getWriteExternalStoragePermission())
+                // 不适配分区存储应该这样写
+                .permission(PermissionLists.getManageExternalStoragePermission()) // 存储权限
+                .interceptor(new PermissionInterceptor())
+                .description(new PermissionDescription())
+                .request((grantedList, deniedList) -> {
+                    boolean allGranted = deniedList.isEmpty();
+                    if (!allGranted) {
+                        Log.d("HomeActivity", "部分权限未授予，可能功能受限！");
+                        return;
+                    }
                 });
     }
 }

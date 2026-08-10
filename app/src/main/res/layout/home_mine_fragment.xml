@@ -24,6 +24,15 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_dialog_file_manager"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="跳转到文件管理页面" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_home_mine_dialog"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"

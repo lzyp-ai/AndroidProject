@@ -6,13 +6,16 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.view.View;
+
 import androidx.annotation.NonNull;
+
 import com.hjq.base.BaseActivity;
 import com.hjq.demo.R;
 import com.hjq.demo.aop.SingleClick;
 import com.hjq.demo.app.TitleBarFragment;
 import com.hjq.demo.ui.activity.AboutActivity;
 import com.hjq.demo.ui.activity.DialogActivity;
+import com.hjq.demo.ui.activity.FileManagerActivity;
 import com.hjq.demo.ui.activity.GuideActivity;
 import com.hjq.demo.ui.activity.HomeActivity;
 import com.hjq.demo.ui.activity.SettingActivity;
@@ -32,14 +35,15 @@ import com.hjq.demo.ui.activity.common.VideoSelectActivity;
 import com.hjq.demo.ui.dialog.common.InputDialog;
 import com.hjq.demo.ui.dialog.common.MessageDialog;
 import com.tencent.bugly.library.Bugly;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2018/10/18
- *    desc   : 我的 Fragment
+ * author : Android 轮子哥
+ * github : https://github.com/getActivity/AndroidProject
+ * time   : 2018/10/18
+ * desc   : 我的 Fragment
  */
 public final class HomeMineFragment extends TitleBarFragment<HomeActivity> {
 
@@ -57,7 +61,7 @@ public final class HomeMineFragment extends TitleBarFragment<HomeActivity> {
         setOnClickListener(R.id.btn_home_mine_dialog, R.id.btn_home_mine_hint, R.id.btn_home_mine_login, R.id.btn_home_mine_register, R.id.btn_home_mine_forget,
                 R.id.btn_home_mine_reset, R.id.btn_home_mine_change, R.id.btn_home_mine_personal, R.id.btn_home_mine_setting, R.id.btn_home_mine_about,
                 R.id.btn_home_mine_guide, R.id.btn_home_mine_browser, R.id.btn_home_mine_image_select, R.id.btn_home_mine_image_preview,
-                R.id.btn_home_mine_video_select, R.id.btn_home_mine_video_play, R.id.btn_home_mine_crash, R.id.btn_home_mine_donate);
+                R.id.btn_home_mine_video_select, R.id.btn_home_mine_video_play, R.id.btn_home_mine_crash, R.id.btn_home_mine_donate, R.id.btn_dialog_file_manager);
     }
 
     @Override
@@ -69,7 +73,11 @@ public final class HomeMineFragment extends TitleBarFragment<HomeActivity> {
     @Override
     public void onClick(@NonNull View view) {
         int viewId = view.getId();
-        if (viewId == R.id.btn_home_mine_dialog) {
+        if (viewId == R.id.btn_dialog_file_manager) {
+
+            // 跳转到文件管理页面
+            startActivity(FileManagerActivity.class);
+        } else if (viewId == R.id.btn_home_mine_dialog) {
 
             startActivity(DialogActivity.class);
 
@@ -189,8 +197,8 @@ public final class HomeMineFragment extends TitleBarFragment<HomeActivity> {
             }
 
             new VideoPlayActivity.Builder()
-                    .setVideoTitle("动物世界")
-                    .setVideoSource("http://vjs.zencdn.net/v/oceans.mp4")
+                    .setVideoTitle("速度与激情特别行动")
+                    .setVideoSource("http://vfx.mtime.cn/Video/2019/06/29/mp4/190629004821240734.mp4")
                     .setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
                     .start(activity);
 

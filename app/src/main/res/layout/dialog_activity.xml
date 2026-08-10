@@ -24,6 +24,55 @@
             android:paddingHorizontal="@dimen/dp_30"
             android:orientation="vertical">
 
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_dialog_file"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="弹出文件选择对话框" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_dialog_file_image"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="弹出图片文件选择对话框" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_dialog_file_txt"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="弹出文本文件选择对话框" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_dialog_file_video"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dp_30"
+                android:text="弹出视频文件选择对话框" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_dialog_file_apk"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="弹出APK文件选择对话框" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_dialog_folder"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dp_30"
+                android:text="弹出文件夹选择对话框" />
+
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_dialog_message"
                 style="@style/ButtonStyle"

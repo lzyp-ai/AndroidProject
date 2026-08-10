@@ -215,8 +215,9 @@ dependencies {
     implementation libs.androidAopCore
     annotationProcessor libs.androidAopApt
 
-    debugImplementation libs.leakCanary
-    previewImplementation libs.leakCanary
+    // 内存泄漏
+//    debugImplementation libs.leakCanary
+//    previewImplementation libs.leakCanary
 
     debugImplementation libs.chucker
     previewImplementation libs.chucker
