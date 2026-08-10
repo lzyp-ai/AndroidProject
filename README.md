@@ -3,16 +3,8 @@
 * 项目地址：[Github](https://github.com/getActivity/AndroidProject)
 
 * Kotlin 版本：[AndroidProject-Kotlin](https://github.com/getActivity/AndroidProject-Kotlin)
-
-* 博客地址：[但愿人长久，搬砖不再有](https://www.jianshu.com/p/77dd326f21dc)
-
-* 当我们日复一日年复一年的搬砖的时候，你是否曾想过提升一下开发效率，如果一个通用的架构摆在你的面前，你还会选择自己搭架构么，但是搭建出一个好的架构并非易事，有多少人愿意选择去做，还有多少人选择努力去做好，可能寥寥无几，但是你今天看到的，正是你所想要的，一个真正能解决你开发新项目时最大痛点的架构工程，你不需要再麻木 Copy 原有旧项目的代码，只需改动少量代码就能得到想要的效果，你会发现开发新项目其实是一件很快乐的事。
-
-* AndroidProject 已维护七年多的时间，几乎耗尽我所有的业余时间，里面的代码改了再改，改了又改，不断 Review、不断创新、不断改进、不断测试、不断优化，每天都在重复这些枯燥的步骤，但是只有这样才能把这件事做好，因为我相信把同样一件事重复做，迟早有一天可以做好。
-
-* 已经正式投入到多个公司项目实践中，暂时没有发现任何问题或者 Bug，[点击下载 Apk 体验](https://github.com/getActivity/AndroidProject/releases/download/13.1/AndroidProject.apk)，又或者扫码下载
-
-![](picture/demo_code.png)
+ 
+ ### 我开发的项目版本
 
 #### 常用界面
 
