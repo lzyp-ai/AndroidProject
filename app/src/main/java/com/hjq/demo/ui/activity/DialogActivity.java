@@ -3,8 +3,10 @@ package com.hjq.demo.ui.activity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.hjq.bar.TitleBar;
 import com.hjq.base.BaseDialog;
 import com.hjq.base.BasePopupWindow;
@@ -23,6 +25,7 @@ import com.hjq.demo.ui.dialog.common.MessageDialog;
 import com.hjq.demo.ui.dialog.common.SelectDialog;
 import com.hjq.demo.ui.dialog.common.ShareDialog;
 import com.hjq.demo.ui.dialog.common.TimeDialog;
+import com.hjq.demo.ui.dialog.common.TimeRangeDialog;
 import com.hjq.demo.ui.dialog.common.TipsDialog;
 import com.hjq.demo.ui.dialog.common.WaitDialog;
 import com.hjq.demo.ui.dialog.common.FileDialog;
@@ -39,17 +42,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2018/12/02
- *    desc   : 对话框使用案例
+ * author : Android 轮子哥
+ * github : https://github.com/getActivity/AndroidProject
+ * time   : 2018/12/02
+ * desc   : 对话框使用案例
  */
 public final class DialogActivity extends AppActivity {
 
-    /** 等待对话框 */
+    /**
+     * 等待对话框
+     */
     private BaseDialog mWaitDialog;
 
-    /** 菜单弹窗 */
+    /**
+     * 菜单弹窗
+     */
     private BasePopupWindow mListPopup;
 
     @Override
@@ -71,7 +78,7 @@ public final class DialogActivity extends AppActivity {
                 R.id.btn_dialog_multi, R.id.btn_dialog_file,
                 R.id.btn_dialog_file_image, R.id.btn_dialog_file_txt,
                 R.id.btn_dialog_file_video, R.id.btn_dialog_file_apk,
-                R.id.btn_dialog_folder);
+                R.id.btn_dialog_folder, R.id.btn_dialog_time_range);
     }
 
     @Override
@@ -596,7 +603,7 @@ public final class DialogActivity extends AppActivity {
                     })
                     .show();
 
-        }else if (viewId == R.id.btn_dialog_file_apk) {
+        } else if (viewId == R.id.btn_dialog_file_apk) {
 
             new FileDialog.Builder(this)
                     .setFilterType(FileDialog.Builder.FILTER_TYPE_APP)
@@ -688,6 +695,53 @@ public final class DialogActivity extends AppActivity {
                     })
                     .show();
 
+        } else if (viewId == R.id.btn_dialog_time_range) {
+
+            new TimeRangeDialog.Builder(this)
+                    .setTitle(getString(R.string.time_range_title))
+                    .setIgnoreSecond()
+                    .setListener(new TimeRangeDialog.OnListener() {
+                        @Override
+                        public void onSelected(@NonNull BaseDialog dialog,
+                                               int startHour, int startMinute, int startSecond,
+                                               int endHour, int endMinute, int endSecond) {
+                            // 原始回调（向后兼容）
+//                            String startTime = String.format("%02d:%02d:%02d", startHour, startMinute, startSecond);
+//                            String endTime = String.format("%02d:%02d:%02d", endHour, endMinute, endSecond);
+//                            toast("开始时间: " + startTime + "\n结束时间: " + endTime);
+//
+//                            // 计算时间戳
+//                            Calendar startCal = Calendar.getInstance();
+//                            startCal.set(Calendar.HOUR_OF_DAY, startHour);
+//                            startCal.set(Calendar.MINUTE, startMinute);
+//                            startCal.set(Calendar.SECOND, startSecond);
+//
+//                            Calendar endCal = Calendar.getInstance();
+//                            endCal.set(Calendar.HOUR_OF_DAY, endHour);
+//                            endCal.set(Calendar.MINUTE, endMinute);
+//                            endCal.set(Calendar.SECOND, endSecond);
+//
+//                            toast("开始时间戳: " + startCal.getTimeInMillis() +
+//                                    "\n结束时间戳: " + endCal.getTimeInMillis());
+                        }
+
+                        @Override
+                        public void onSelectedTime(@NonNull BaseDialog dialog, String startTime, String endTime) {
+                            // 新增回调：直接获取格式化的时间字符串（更简洁）
+                            toast("开始时间: " + startTime + "\n结束时间: " + endTime);
+                        }
+
+                        @Override
+                        public void onTimeRangeInvalid(@NonNull BaseDialog dialog) {
+                            toast("结束时间不能早于开始时间");
+                        }
+
+                        @Override
+                        public void onCancel(@NonNull BaseDialog dialog) {
+                            toast("取消了");
+                        }
+                    })
+                    .show();
         }
     }
 

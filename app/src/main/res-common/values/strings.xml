@@ -78,6 +78,11 @@
     <!-- 时间对话框 -->
     <string name="time_title">请选择时间</string>
 
+    <!-- 时间范围对话框 -->
+    <string name="time_range_title">请选择时间范围</string>
+    <string name="time_range_start">开始时间</string>
+    <string name="time_range_end">结束时间</string>
+
     <!-- 分享对话框 -->
     <string name="share_title">分享到&#8230;</string>
 

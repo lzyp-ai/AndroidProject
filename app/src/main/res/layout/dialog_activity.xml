@@ -24,6 +24,14 @@
             android:paddingHorizontal="@dimen/dp_30"
             android:orientation="vertical">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_dialog_time_range"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="时间范围选择" />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_dialog_file"

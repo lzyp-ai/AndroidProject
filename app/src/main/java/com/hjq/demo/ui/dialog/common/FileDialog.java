@@ -30,6 +30,7 @@ import com.hjq.custom.widget.layout.SimpleLayout;
 import com.hjq.demo.R;
 import com.hjq.demo.aop.SingleClick;
 import com.hjq.demo.app.AppAdapter;
+import com.hjq.demo.widget.FileListDivider;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
@@ -93,8 +94,6 @@ public final class FileDialog {
         @NonNull
         private final RecyclerView mContentRecyclerView;
         @NonNull
-        private final TextView mBackView;
-        @NonNull
         private final TextView mPathView;
         @NonNull
         private final View mPathLayout;
@@ -150,7 +149,6 @@ public final class FileDialog {
             mContentLayout = findViewById(R.id.sl_file_content_layout);
             mDeviceRecyclerView = findViewById(R.id.rv_file_device_list);
             mContentRecyclerView = findViewById(R.id.rv_file_content_list);
-            mBackView = findViewById(R.id.tv_file_back);
             mPathView = findViewById(R.id.tv_file_path);
             mPathLayout = findViewById(R.id.ll_file_path);
             mDeviceRefreshLayout = findViewById(R.id.srl_file_device_refresh);
@@ -164,7 +162,7 @@ public final class FileDialog {
 
             updateTitle();
 
-            setOnClickListener(mCloseView, mBackView, mFolderConfirmButton);
+            setOnClickListener(mCloseView, mFolderConfirmButton);
 
             mDeviceAdapter = new DeviceAdapter(getContext());
             mDeviceAdapter.setOnItemClickListener(this::onDeviceItemClick);
@@ -173,6 +171,7 @@ public final class FileDialog {
             mContentAdapter = new ContentAdapter(getContext());
             mContentAdapter.setOnItemClickListener(this::onContentItemClick);
             mContentRecyclerView.setAdapter(mContentAdapter);
+            mContentRecyclerView.addItemDecoration(new FileListDivider(getContext()));
 
 
             // 设置左侧下拉刷新
@@ -468,14 +467,28 @@ public final class FileDialog {
 
             String path = mCurrentPath.getAbsolutePath();
             mPathView.setText(path);
-
-            boolean canBack = mCurrentPath.getParent() != null;
-            mPathLayout.setVisibility(canBack ? View.VISIBLE : View.GONE);
+            
+            // 显示路径布局
+            mPathLayout.setVisibility(View.VISIBLE);
         }
 
         @SuppressLint("NewApi")
         private void updateContentList(@NonNull File path) {
             List<ContentItem> items = new ArrayList<>();
+
+            // 判断是否在当前设备的根目录
+            boolean isAtDeviceRoot = mCurrentDevice != null && 
+                    mCurrentPath.getAbsolutePath().equals(mCurrentDevice.path);
+            
+            // 如果不在根目录且父目录存在，添加 ".." 返回文件夹项
+            if (!isAtDeviceRoot && path.getParent() != null) {
+                ContentItem parentItem = new ContentItem();
+                parentItem.name = "..";
+                parentItem.isDirectory = true;
+                parentItem.file = path.getParentFile();
+                parentItem.isParentFolder = true;  // 标记为返回文件夹
+                items.add(parentItem);
+            }
 
             File[] files = path.listFiles();
             if (files != null) {
@@ -506,8 +519,15 @@ public final class FileDialog {
                 }
             }
 
-            // 排序：先文件夹后文件，各自按名称排序
+            // 排序：先文件夹后文件，各自按名称排序（但 ".." 始终在最前）
             items.sort((item1, item2) -> {
+                // ".." 始终排在最前面
+                if (item1.isParentFolder) {
+                    return -1;
+                }
+                if (item2.isParentFolder) {
+                    return 1;
+                }
                 if (item1.isDirectory && !item2.isDirectory) {
                     return -1;
                 }
@@ -573,7 +593,10 @@ public final class FileDialog {
         private void onContentItemClick(@NonNull RecyclerView recyclerView, @NonNull View itemView, int position) {
             ContentItem item = mContentAdapter.getItem(position);
             if (item != null && item.file != null) {
-                if (item.isDirectory) {
+                if (item.isParentFolder) {
+                    // 点击 ".." 返回父目录
+                    loadContentList(item.file);
+                } else if (item.isDirectory) {
                     // 点击文件夹直接进入
                     loadContentList(item.file);
                 } else {
@@ -671,11 +694,6 @@ public final class FileDialog {
                 dismiss();
                 if (mListener != null) {
                     mListener.onCancel(getDialog());
-                }
-            } else if (viewId == R.id.tv_file_back && mCurrentPath != null) {
-                File parent = mCurrentPath.getParentFile();
-                if (parent != null) {
-                    loadContentList(parent);
                 }
             } else if (viewId == R.id.tv_folder_confirm) {
                 // 选择当前文件夹
@@ -881,14 +899,14 @@ public final class FileDialog {
 
             private final ImageView mIconView;
             private final TextView mNameView;
-            private final TextView mSizeView;
+            private final TextView mInfoView;
             private final LinearLayout mRootView;
 
             ContentViewHolder() {
                 super(R.layout.file_content_item);
                 mIconView = findViewById(R.id.iv_file_content_icon);
                 mNameView = findViewById(R.id.tv_file_content_name);
-                mSizeView = findViewById(R.id.tv_file_content_size);
+                mInfoView = findViewById(R.id.tv_file_content_info);
                 mRootView = findViewById(R.id.ll_file_content_root);
             }
 
@@ -906,11 +924,21 @@ public final class FileDialog {
                 int iconRes = getFileIcon(item);
                 mIconView.setImageResource(iconRes);
 
-                if (!item.isDirectory) {
-                    mSizeView.setVisibility(View.VISIBLE);
-                    mSizeView.setText(formatFileSize(item.size));
+                // 根据文件类型显示不同的信息
+                if (item.isParentFolder) {
+                    // ".." 返回文件夹：不显示日期和数量信息
+                    mInfoView.setText("");
+                } else if (item.isDirectory) {
+                    // 文件夹：显示修改日期和子项数量
+                    int itemCount = getFolderItemCount(item.file);
+                    String itemCountText = itemCount + " 项";
+                    String dateText = formatDate(item.lastModified);
+                    mInfoView.setText(dateText + " | " + itemCountText);
                 } else {
-                    mSizeView.setVisibility(View.GONE);
+                    // 文件：显示修改日期和文件大小
+                    String sizeText = formatFileSize(item.size);
+                    String dateText = formatDate(item.lastModified);
+                    mInfoView.setText(dateText + " | " + sizeText);
                 }
 
                 if (isSelected) {
@@ -918,6 +946,25 @@ public final class FileDialog {
                 } else {
                     mRootView.setBackground(null);
                 }
+            }
+
+            /**
+             * 获取文件夹中的子项数量
+             */
+            private int getFolderItemCount(File folder) {
+                if (folder == null || !folder.isDirectory()) {
+                    return 0;
+                }
+                File[] files = folder.listFiles();
+                return files != null ? files.length : 0;
+            }
+
+            /**
+             * 格式化日期
+             */
+            private String formatDate(long timestamp) {
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                return sdf.format(new java.util.Date(timestamp));
             }
 
             private int getFileIcon(ContentItem item) {
@@ -980,6 +1027,7 @@ public final class FileDialog {
         public long size;
         public long lastModified;
         public String extension;
+        public boolean isParentFolder;  // 标记是否为返回父目录的 ".." 文件夹
     }
 
     public interface OnListener {
