@@ -5,9 +5,14 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,10 +38,10 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * author : Android 轮子哥
- * github : https://github.com/getActivity/AndroidProject
- * time   : 2025/03/06
- * desc   : 应用选择对话框
+ *    author : Android 轮子哥
+ *    github : https://github.com/getActivity/AndroidProject
+ *    time   : 2025/03/06
+ *    desc   : 应用选择对话框
  */
 public final class AppSelectDialog {
 
@@ -53,6 +58,16 @@ public final class AppSelectDialog {
         @NonNull
         private final ImageView mCloseView;
         @NonNull
+        private final ImageView mSearchIcon;
+        @NonNull
+        private final ImageView mSearchCloseView;
+        @NonNull
+        private final LinearLayout mTitleBar;
+        @NonNull
+        private final LinearLayout mSearchBar;
+        @NonNull
+        private final EditText mSearchEdit;
+        @NonNull
         private final RecyclerView mTabView;
         @NonNull
         private final RecyclerView mListView;
@@ -64,6 +79,10 @@ public final class AppSelectDialog {
         @NonNull
         private final AppAdapter<AppInfo> mAdapter;
 
+        /** 当前 Tab 完整列表（搜索时从此过滤） */
+        @NonNull
+        private List<AppInfo> mFullList = new ArrayList<>();
+
         @Nullable
         private OnListener mListener;
         private int mCurrentType = TYPE_USER_APP;
@@ -72,11 +91,14 @@ public final class AppSelectDialog {
         public Builder(@NonNull Context context) {
             super(context);
             setContentView(R.layout.app_select_dialog);
-            // 使用固定高度，确保内容可以滚动
-//            setHeight((int) (context.getResources().getDisplayMetrics().heightPixels * 0.7f));
 
+            mTitleBar = findViewById(R.id.ll_app_select_title_bar);
+            mSearchBar = findViewById(R.id.ll_app_select_search_bar);
             mTitleView = findViewById(R.id.tv_app_select_title);
             mCloseView = findViewById(R.id.iv_app_select_close);
+            mSearchIcon = findViewById(R.id.iv_app_select_search);
+            mSearchCloseView = findViewById(R.id.iv_app_select_search_close);
+            mSearchEdit = findViewById(R.id.et_app_select_search);
             mTabView = findViewById(R.id.rv_app_select_tab);
             mListView = findViewById(R.id.rv_app_select_list);
             mRefreshLayout = findViewById(R.id.srl_app_select);
@@ -129,8 +151,28 @@ public final class AppSelectDialog {
             mListView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
             mListView.setAdapter(mAdapter);
 
-            // 设置关闭按钮点击事件
+            // 点击搜索图标 → 切换到搜索模式
+            mSearchIcon.setOnClickListener(v -> showSearchMode(true));
+
+            // 点击搜索栏的关闭图标 → 退出搜索模式
+            mSearchCloseView.setOnClickListener(v -> showSearchMode(false));
+
+            // 点击对话框关闭按钮
             setOnClickListener(mCloseView);
+
+            // 搜索框输入监听
+            mSearchEdit.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    filterList(s.toString().trim());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
 
             // 设置下拉刷新，禁用上拉加载更多（应用列表为一次性全量加载）
             mRefreshLayout.setEnableLoadMore(false);
@@ -154,6 +196,58 @@ public final class AppSelectDialog {
 
             addOnShowListener(this);
             addOnDismissListener(this);
+        }
+
+        /**
+         * 切换标题栏 / 搜索栏
+         *
+         * @param searchMode true 显示搜索栏，false 显示标题栏
+         */
+        private void showSearchMode(boolean searchMode) {
+            if (searchMode) {
+                mTitleBar.setVisibility(View.GONE);
+                mSearchBar.setVisibility(View.VISIBLE);
+                mSearchEdit.requestFocus();
+                // 弹出键盘
+                InputMethodManager imm = (InputMethodManager) getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.showSoftInput(mSearchEdit, InputMethodManager.SHOW_IMPLICIT);
+                }
+            } else {
+                mTitleBar.setVisibility(View.VISIBLE);
+                mSearchBar.setVisibility(View.GONE);
+                mSearchEdit.setText("");
+                // 收起键盘
+                InputMethodManager imm = (InputMethodManager) getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(mSearchEdit.getWindowToken(), 0);
+                }
+                // 还原完整列表
+                mAdapter.setData(new ArrayList<>(mFullList));
+            }
+        }
+
+        /**
+         * 根据关键词过滤列表
+         *
+         * @param keyword 搜索关键词
+         */
+        private void filterList(String keyword) {
+            if (keyword.isEmpty()) {
+                mAdapter.setData(new ArrayList<>(mFullList));
+                return;
+            }
+            String lower = keyword.toLowerCase(Locale.getDefault());
+            List<AppInfo> filtered = new ArrayList<>();
+            for (AppInfo appInfo : mFullList) {
+                if (appInfo.getName().toLowerCase(Locale.getDefault()).contains(lower)
+                        || appInfo.getPackageName().toLowerCase(Locale.getDefault()).contains(lower)) {
+                    filtered.add(appInfo);
+                }
+            }
+            mAdapter.setData(filtered);
         }
 
         public Builder setTitle(@Nullable CharSequence title) {
@@ -183,6 +277,8 @@ public final class AppSelectDialog {
         @Override
         public boolean onTabSelected(@NonNull RecyclerView recyclerView, int position) {
             mCurrentType = position;
+            // 切 Tab 时退出搜索模式
+            showSearchMode(false);
             loadAppList(position);
             return true;
         }
@@ -193,8 +289,8 @@ public final class AppSelectDialog {
          * @param type 应用类型（用户应用或系统应用）
          */
         private void loadAppList(int type) {
-            List<AppInfo> appList = getAppList(getContext(), type);
-            mAdapter.setData(appList);
+            mFullList = getAppList(getContext(), type);
+            mAdapter.setData(new ArrayList<>(mFullList));
         }
 
         /**
@@ -248,41 +344,23 @@ public final class AppSelectDialog {
             appList.add(appInfo);
         }
 
-        // 按应用名称排序（中文按拼音，英文按字母）
-        // java.text.Collator collator = java.text.Collator.getInstance(java.util.Locale.CHINA);
-        // Collections.sort(appList, (o1, o2) -> collator.compare(o1.getName(), o2.getName()));
-
+        // 按应用名称排序（英文字母优先，中文按拼音）
         Collections.sort(appList, new Comparator<AppInfo>() {
             Collator collator = Collator.getInstance(Locale.CHINA);
 
             @Override
             public int compare(AppInfo o1, AppInfo o2) {
-
                 String name1 = o1.getName();
                 String name2 = o2.getName();
-
-                boolean english1 =
-                        name1.matches("^[a-zA-Z].*");
-
-                boolean english2 =
-                        name2.matches("^[a-zA-Z].*");
-
+                boolean english1 = name1.matches("^[a-zA-Z].*");
+                boolean english2 = name2.matches("^[a-zA-Z].*");
 
                 // 英文优先
-                if (english1 && !english2) {
-                    return -1;
-                }
-
-                if (!english1 && english2) {
-                    return 1;
-                }
-
+                if (english1 && !english2) return -1;
+                if (!english1 && english2) return 1;
 
                 // 英文 A-Z
-                if (english1) {
-                    return name1.compareToIgnoreCase(name2);
-                }
-
+                if (english1) return name1.compareToIgnoreCase(name2);
 
                 // 中文拼音
                 return collator.compare(name1, name2);
