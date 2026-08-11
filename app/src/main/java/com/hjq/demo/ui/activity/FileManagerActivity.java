@@ -31,7 +31,11 @@ import com.hjq.demo.R;
 import com.hjq.demo.app.AppActivity;
 import com.hjq.demo.app.AppAdapter;
 import com.hjq.demo.aop.SingleClick;
+import com.hjq.demo.permission.PermissionDescription;
+import com.hjq.demo.permission.PermissionInterceptor;
 import com.hjq.demo.ui.dialog.common.FileDialog;
+import com.hjq.permissions.XXPermissions;
+import com.hjq.permissions.permission.PermissionLists;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
@@ -142,9 +146,30 @@ public final class FileManagerActivity extends AppActivity {
 
     @Override
     protected void initData() {
-        loadStorageDevices();
+        checkStoragePermissionAndLoad();
         registerStorageReceiver();
         registerUsbReceiver();
+    }
+
+    private void checkStoragePermissionAndLoad() {
+        if (XXPermissions.isGrantedPermission(this, PermissionLists.getManageExternalStoragePermission())) {
+            // 已有权限，直接加载
+            loadStorageDevices();
+        } else {
+            // 没有权限，申请完再加载
+            XXPermissions.with(this)
+                    .permission(PermissionLists.getManageExternalStoragePermission())
+                    .interceptor(new PermissionInterceptor())
+                    .description(new PermissionDescription())
+                    .request((grantedList, deniedList) -> {
+                        if (deniedList.isEmpty()) {
+                            // 权限授予成功后再加载，确保存储卷对当前进程可见
+                            loadStorageDevices();
+                        } else {
+                            toast("未授予存储权限，无法读取文件");
+                        }
+                    });
+        }
     }
 
     @Override
