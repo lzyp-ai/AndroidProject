@@ -18,6 +18,7 @@ import com.hjq.demo.ui.dialog.PayPasswordDialog;
 import com.hjq.demo.ui.dialog.SafeDialog;
 import com.hjq.demo.ui.dialog.UpdateDialog;
 import com.hjq.demo.ui.dialog.common.AddressDialog;
+import com.hjq.demo.ui.dialog.common.AppSelectDialog;
 import com.hjq.demo.ui.dialog.common.DateDialog;
 import com.hjq.demo.ui.dialog.common.InputDialog;
 import com.hjq.demo.ui.dialog.common.MenuDialog;
@@ -78,7 +79,8 @@ public final class DialogActivity extends AppActivity {
                 R.id.btn_dialog_multi, R.id.btn_dialog_file,
                 R.id.btn_dialog_file_image, R.id.btn_dialog_file_txt,
                 R.id.btn_dialog_file_video, R.id.btn_dialog_file_apk,
-                R.id.btn_dialog_folder, R.id.btn_dialog_time_range);
+                R.id.btn_dialog_folder, R.id.btn_dialog_time_range,
+                R.id.btn_dialog_app_select);
     }
 
     @Override
@@ -742,6 +744,27 @@ public final class DialogActivity extends AppActivity {
                         }
                     })
                     .show();
+
+        } else if (viewId == R.id.btn_dialog_app_select) {
+            // 应用选择对话框
+            new AppSelectDialog.Builder(this)
+                    .setTitle("选择应用")
+                    .setListener(new AppSelectDialog.OnListener() {
+
+                        @Override
+                        public void onSelected(@NonNull BaseDialog dialog, AppSelectDialog.AppInfo appInfo) {
+                            toast("选择了应用:\n名称：" + appInfo.getName() +
+                                    "\n包名：" + appInfo.getPackageName() +
+                                    "\n版本：" + appInfo.getVersionName());
+                        }
+
+                        @Override
+                        public void onCancel(@NonNull BaseDialog dialog) {
+                            toast("取消了");
+                        }
+                    })
+                    .show();
+
         }
     }
 
