@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_audio_player_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- 封面占位 + 文件信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_40">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_audio_player_cover"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="@dimen/dp_120"
+            android:src="@drawable/file_audio" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_audio_player_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="#333333"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_audio_player_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            android:ellipsize="middle"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/common_text_hint_color"
+            android:textSize="@dimen/sp_12" />
+
+    </LinearLayout>
+
+    <!-- 分割线 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_size"
+        android:background="@color/common_line_color" />
+
+    <!-- 控制区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_20">
+
+        <!-- 时间 + 进度条 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_audio_player_current"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@color/common_text_hint_color"
+                android:textSize="@dimen/sp_12" />
+
+            <SeekBar
+                android:id="@+id/sb_audio_player_progress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_audio_player_duration"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="00:00"
+                android:textColor="@color/common_text_hint_color"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <!-- 播放控制按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- 快退 15s -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_audio_player_rewind"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/video_schedule_rewind_ic" />
+
+            <!-- 播放/暂停 -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_audio_player_toggle"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginHorizontal="@dimen/dp_30"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/audio_play_ic" />
+
+            <!-- 快进 15s -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_audio_player_forward"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/video_schedule_forward_ic" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

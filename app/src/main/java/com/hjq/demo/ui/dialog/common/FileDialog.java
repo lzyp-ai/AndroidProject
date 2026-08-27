@@ -480,10 +480,10 @@ public final class FileDialog {
             boolean isAtDeviceRoot = mCurrentDevice != null && 
                     mCurrentPath.getAbsolutePath().equals(mCurrentDevice.path);
             
-            // 如果不在根目录且父目录存在，添加 ".." 返回文件夹项
+            // 如果不在根目录且父目录存在，添加 "..." 返回文件夹项
             if (!isAtDeviceRoot && path.getParent() != null) {
                 ContentItem parentItem = new ContentItem();
-                parentItem.name = "..";
+                parentItem.name = "...";
                 parentItem.isDirectory = true;
                 parentItem.file = path.getParentFile();
                 parentItem.isParentFolder = true;  // 标记为返回文件夹

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_image_viewer_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- PhotoView 图片区域，填充剩余空间 -->
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/pv_image_viewer_photo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

@@ -241,6 +241,24 @@
             android:launchMode="singleTop"
             android:screenOrientation="landscape" />
 
+        <!-- 文본查看 -->
+        <activity
+            android:name=".ui.activity.common.TextViewerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+
+        <!-- 음频播放 -->
+        <activity
+            android:name=".ui.activity.common.AudioPlayerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+
+        <!-- 图片查看 -->
+        <activity
+            android:name=".ui.activity.common.ImageViewerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+
         <!-- 状态案例 -->
         <activity
             android:name=".ui.activity.StatusActivity"
