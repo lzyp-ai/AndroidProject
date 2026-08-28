@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 标签页 Item 背景：选中偏灰白，未选中深灰 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 选中状态：偏灰白色，与工具栏底色融合，比未选中明显偏亮 -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="6dp"
+                android:topRightRadius="6dp" />
+            <solid android:color="#ECEEF1" />
+        </shape>
+    </item>
+
+    <!-- 默认状态：中灰，与选中形成明显明度差 -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="6dp"
+                android:topRightRadius="6dp" />
+            <solid android:color="#B0B5BE" />
+        </shape>
+    </item>
+
+</selector>

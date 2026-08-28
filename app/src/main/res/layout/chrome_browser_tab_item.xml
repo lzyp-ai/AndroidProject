@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chrome 风格单个标签页 Item -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_160"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/chrome_tab_item_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/dp_8">
+
+    <!-- 网页 favicon：默认地球占位，有真实 favicon 后替换 -->
+    <ImageView
+        android:id="@+id/iv_chrome_tab_favicon"
+        android:layout_width="@dimen/dp_14"
+        android:layout_height="@dimen/dp_14"
+        android:layout_marginEnd="@dimen/dp_6"
+        android:contentDescription="@string/chrome_tab_favicon"
+        android:src="@drawable/chrome_globe_ic"
+        app:tint="@color/chrome_icon_color" />
+
+    <!-- 标签标题 -->
+    <TextView
+        android:id="@+id/tv_chrome_tab_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/chrome_new_tab"
+        android:textColor="@color/chrome_tab_text_color"
+        android:textSize="@dimen/sp_12" />
+
+    <!-- 关闭按钮 -->
+    <ImageView
+        android:id="@+id/iv_chrome_tab_close"
+        android:layout_width="@dimen/dp_18"
+        android:layout_height="@dimen/dp_18"
+        android:background="@drawable/chrome_icon_btn_bg"
+        android:contentDescription="@string/chrome_tab_close"
+        android:padding="@dimen/dp_2"
+        android:src="@drawable/chrome_close_ic"
+        app:tint="@color/chrome_icon_color" />
+
+</LinearLayout>

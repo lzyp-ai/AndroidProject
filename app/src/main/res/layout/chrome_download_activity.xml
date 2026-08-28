@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/chrome_new_tab_bg"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_download_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rightIcon="@drawable/chrome_add_ic"
+        app:rightIconWidth="@dimen/dp_24"
+        app:rightIconHeight="@dimen/dp_24"
+        app:title="@string/chrome_download_title" />
+
+    <!-- Tab 切换（使用项目通用 TabAdapter + RecyclerView） -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_download_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:itemCount="2"
+        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/tab_item_design"
+        tools:spanCount="2" />
+
+    <!-- 内容页 -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_download_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/chrome_new_tab_bg" />
+
+</LinearLayout>

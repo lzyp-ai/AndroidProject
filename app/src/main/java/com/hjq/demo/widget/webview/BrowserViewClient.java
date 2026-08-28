@@ -209,6 +209,10 @@ public class BrowserViewClient extends WebViewClient {
             // 如果这是跳链接操作
             case "http":
             case "https":
+                // 如果是文件下载链接，不拦截，让 WebView 走 DownloadListener
+                if (isDownloadUrl(url)) {
+                    return false;
+                }
                 view.loadUrl(url);
                 break;
             // 如果这是打电话操作
@@ -219,6 +223,27 @@ public class BrowserViewClient extends WebViewClient {
                 break;
         }
         return true;
+    }
+
+    /**
+     * 判断是否是文件下载链接（根据扩展名）
+     */
+    private boolean isDownloadUrl(@NonNull String url) {
+        String path = url.split("\\?")[0].toLowerCase();
+        String[] downloadExts = {
+            ".apk", ".zip", ".rar", ".7z", ".tar", ".gz",
+            ".exe", ".dmg", ".pkg", ".msi",
+            ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx",
+            ".mp3", ".mp4", ".avi", ".mkv", ".flv", ".mov",
+            ".jpg", ".jpeg", ".png", ".gif", ".webp",
+            ".iso", ".img", ".bin"
+        };
+        for (String ext : downloadExts) {
+            if (path.endsWith(ext)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

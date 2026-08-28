@@ -53,4 +53,5 @@
         <item name="android:windowSplashScreenBrandingImage" tools:targetApi="31">@color/transparent</item>
     </style>
 
+
 </resources>

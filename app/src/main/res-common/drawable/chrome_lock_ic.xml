@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HTTPS 安全锁图标 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M19,11H5A2,2 0,0 0,3 13V20A2,2 0,0 0,5 22H19A2,2 0,0 0,21 20V13A2,2 0,0 0,19 11Z"
+        android:strokeColor="#1A73E8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2" />
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M7,11V7A5,5 0,0 1,17 7V11"
+        android:strokeColor="#1A73E8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2" />
+</vector>

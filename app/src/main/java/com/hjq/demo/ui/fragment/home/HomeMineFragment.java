@@ -27,6 +27,8 @@ import com.hjq.demo.ui.activity.account.PersonalDataActivity;
 import com.hjq.demo.ui.activity.account.PhoneResetActivity;
 import com.hjq.demo.ui.activity.account.RegisterActivity;
 import com.hjq.demo.ui.activity.common.BrowserActivity;
+import com.hjq.demo.ui.activity.common.ChromeBrowserActivity;
+import com.hjq.demo.ui.activity.common.ChromeDownloadActivity;
 import com.hjq.demo.ui.activity.common.ImagePreviewActivity;
 import com.hjq.demo.ui.activity.common.ImageSelectActivity;
 import com.hjq.demo.ui.activity.common.ImageSelectActivity.OnImageSelectListener;
@@ -60,7 +62,7 @@ public final class HomeMineFragment extends TitleBarFragment<HomeActivity> {
     protected void initView() {
         setOnClickListener(R.id.btn_home_mine_dialog, R.id.btn_home_mine_hint, R.id.btn_home_mine_login, R.id.btn_home_mine_register, R.id.btn_home_mine_forget,
                 R.id.btn_home_mine_reset, R.id.btn_home_mine_change, R.id.btn_home_mine_personal, R.id.btn_home_mine_setting, R.id.btn_home_mine_about,
-                R.id.btn_home_mine_guide, R.id.btn_home_mine_browser, R.id.btn_home_mine_image_select, R.id.btn_home_mine_image_preview,
+                R.id.btn_home_mine_guide, R.id.btn_home_mine_browser, R.id.btn_home_mine_chrome_browser, R.id.btn_home_mine_downloads, R.id.btn_home_mine_image_select, R.id.btn_home_mine_image_preview,
                 R.id.btn_home_mine_video_select, R.id.btn_home_mine_video_play, R.id.btn_home_mine_crash, R.id.btn_home_mine_donate, R.id.btn_dialog_file_manager);
     }
 
@@ -136,6 +138,14 @@ public final class HomeMineFragment extends TitleBarFragment<HomeActivity> {
                     .setCancel(getString(R.string.common_cancel))
                     .setListener((dialog, content) -> BrowserActivity.start(activity, content))
                     .show();
+
+        } else if (viewId == R.id.btn_home_mine_chrome_browser) {
+
+            ChromeBrowserActivity.start(getAttachActivity(), null);
+
+        } else if (viewId == R.id.btn_home_mine_downloads) {
+
+            ChromeDownloadActivity.start(getContext());
 
         } else if (viewId == R.id.btn_home_mine_image_select) {
 

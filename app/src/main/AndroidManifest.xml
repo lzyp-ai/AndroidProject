@@ -184,6 +184,22 @@
             android:launchMode="singleTop"
             android:screenOrientation="landscape" />
 
+        <!-- Chrome 风格多标签浏览器 -->
+        <activity
+            android:name=".ui.activity.common.ChromeBrowserActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/chrome_browser_title"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- Chrome 风格下载列表 -->
+        <activity
+            android:name=".ui.activity.common.ChromeDownloadActivity"
+            android:label="@string/chrome_download_title"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+
         <!-- 拍照选择 -->
         <activity
             android:name=".ui.activity.common.CameraActivity"

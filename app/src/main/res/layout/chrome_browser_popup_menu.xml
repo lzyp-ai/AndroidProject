@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chrome 风格更多菜单弹窗 -->
+<!-- 外层 FrameLayout 承载圆角背景和阴影，ScrollView 在内部滚动不影响圆角裁剪 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_220"
+    android:layout_height="wrap_content"
+    android:background="@drawable/chrome_popup_menu_bg"
+    android:clipToOutline="true"
+    android:elevation="8dp"
+    android:outlineProvider="background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/dp_6">
+
+            <!-- 新建标签页 -->
+            <LinearLayout
+                android:id="@+id/ll_menu_new_tab"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:background="@drawable/chrome_menu_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_18"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:src="@drawable/chrome_add_ic"
+                    android:tint="@color/chrome_menu_icon_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chrome_menu_new_tab"
+                    android:textColor="@color/chrome_menu_text_color"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+            <!-- 分割线1：新建标签页 和 页面操作区之间 -->
+            <View
+                android:id="@+id/v_menu_divider_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_size"
+                android:layout_marginVertical="@dimen/dp_4"
+                android:background="@color/chrome_menu_divider_color" />
+
+            <!-- 刷新 -->
+            <LinearLayout
+                android:id="@+id/ll_menu_reload"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:background="@drawable/chrome_menu_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_18"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:src="@drawable/chrome_reload_ic"
+                    android:tint="@color/chrome_menu_icon_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chrome_menu_reload"
+                    android:textColor="@color/chrome_menu_text_color"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+            <!-- 添加到快速访问 -->
+            <LinearLayout
+                android:id="@+id/ll_menu_add_bookmark"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:background="@drawable/chrome_menu_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_18"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:src="@drawable/chrome_bookmark_ic"
+                    android:tint="@color/chrome_menu_icon_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chrome_menu_add_bookmark"
+                    android:textColor="@color/chrome_menu_text_color"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+            <!-- 分割线2：页面操作区 和 链接操作区之间 -->
+            <View
+                android:id="@+id/v_menu_divider_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_size"
+                android:layout_marginVertical="@dimen/dp_4"
+                android:background="@color/chrome_menu_divider_color" />
+
+            <!-- 复制链接 -->
+            <LinearLayout
+                android:id="@+id/ll_menu_copy_link"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:background="@drawable/chrome_menu_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_18"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:src="@drawable/chrome_copy_ic"
+                    android:tint="@color/chrome_menu_icon_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chrome_menu_copy_link"
+                    android:textColor="@color/chrome_menu_text_color"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+            <!-- 用系统浏览器打开 -->
+            <LinearLayout
+                android:id="@+id/ll_menu_open_browser"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:background="@drawable/chrome_menu_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_18"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:src="@drawable/chrome_globe_ic"
+                    android:tint="@color/chrome_menu_icon_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chrome_menu_open_in_browser"
+                    android:textColor="@color/chrome_menu_text_color"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+            <!-- 分享 -->
+            <LinearLayout
+                android:id="@+id/ll_menu_share"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:background="@drawable/chrome_menu_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_18"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:src="@drawable/chrome_share_ic"
+                    android:tint="@color/chrome_menu_icon_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chrome_menu_share"
+                    android:textColor="@color/chrome_menu_text_color"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+            <!-- 分割线3：链接操作区 和 设置区之间 -->
+            <View
+                android:id="@+id/v_menu_divider_3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_size"
+                android:layout_marginVertical="@dimen/dp_4"
+                android:background="@color/chrome_menu_divider_color" />
+
+            <!-- 设置主页 -->
+            <LinearLayout
+                android:id="@+id/ll_menu_set_homepage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:background="@drawable/chrome_menu_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_18"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:src="@drawable/chrome_home_ic"
+                    android:tint="@color/chrome_menu_icon_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chrome_menu_set_homepage"
+                    android:textColor="@color/chrome_menu_text_color"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+            <!-- 下载 -->
+            <LinearLayout
+                android:id="@+id/ll_menu_downloads"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:background="@drawable/chrome_menu_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_18"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:src="@drawable/chrome_download_ic"
+                    android:tint="@color/chrome_menu_icon_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chrome_menu_downloads"
+                    android:textColor="@color/chrome_menu_text_color"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

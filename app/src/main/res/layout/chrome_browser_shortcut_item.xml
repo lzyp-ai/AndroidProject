@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 快速访问书签单个 Item -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_80"
+    android:layout_height="wrap_content"
+    android:background="@drawable/chrome_icon_btn_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_8">
+
+    <!-- 圆形图标容器 -->
+    <FrameLayout
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_48">
+
+        <!-- 圆形背景 + favicon -->
+        <ImageView
+            android:id="@+id/iv_shortcut_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/chrome_shortcut_icon_bg"
+            android:padding="@dimen/dp_10"
+            android:scaleType="centerInside"
+            android:src="@drawable/chrome_globe_ic"
+            android:tint="@color/chrome_shortcut_icon_color" />
+
+    </FrameLayout>
+
+    <!-- 网站名称 -->
+    <TextView
+        android:id="@+id/tv_shortcut_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:textColor="@color/chrome_shortcut_text_color"
+        android:textSize="@dimen/sp_11" />
+
+</LinearLayout>

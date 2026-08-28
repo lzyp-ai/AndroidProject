@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 新增快速访问书签对话框内容 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:text="@string/chrome_shortcut_name_hint"
+        android:textColor="@color/chrome_shortcuts_title_color"
+        android:textSize="@dimen/sp_12" />
+
+    <EditText
+        android:id="@+id/et_shortcut_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_12"
+        android:hint="@string/chrome_shortcut_name_hint"
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:text="@string/chrome_shortcut_url_hint"
+        android:textColor="@color/chrome_shortcuts_title_color"
+        android:textSize="@dimen/sp_12" />
+
+    <EditText
+        android:id="@+id/et_shortcut_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/chrome_shortcut_url_hint"
+        android:inputType="textUri"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textSize="@dimen/sp_14" />
+
+</LinearLayout>

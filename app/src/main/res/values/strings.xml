@@ -20,6 +20,62 @@
     <string name="privacy_agreement_agree">同意</string>
     <string name="privacy_agreement_disagree">不同意并退出</string>
 
+    <!-- Chrome 风格浏览器 -->
+    <string name="chrome_browser_title">Chrome 浏览器</string>
+    <string name="chrome_new_tab">新标签页</string>
+    <string name="chrome_url_hint">搜索或输入网址</string>
+    <string name="chrome_search_hint">搜索百度或输入网址</string>
+    <string name="chrome_go_back">后退</string>
+    <string name="chrome_go_forward">前进</string>
+    <string name="chrome_reload">刷新</string>
+    <string name="chrome_go_home">主页</string>
+    <string name="chrome_more">更多</string>
+    <string name="chrome_secure">安全连接</string>
+    <string name="chrome_search">搜索</string>
+    <string name="chrome_shortcuts">快速访问</string>
+    <string name="chrome_tab_favicon">网页图标</string>
+    <string name="chrome_tab_close">关闭标签页</string>
+    <string name="chrome_menu_copy_link">复制链接</string>
+    <string name="chrome_menu_open_in_browser">在系统浏览器中打开</string>
+    <string name="chrome_menu_share">分享</string>
+    <string name="chrome_menu_new_tab">新建标签页</string>
+    <string name="chrome_menu_reload">刷新页面</string>
+    <string name="chrome_menu_add_bookmark">添加到快速访问</string>
+    <string name="chrome_add_shortcut">添加快捷方式</string>
+    <string name="chrome_menu_copy_success">链接已复制到剪贴板</string>
+    <string name="chrome_menu_open_fail">打开浏览器失败</string>
+    <string name="chrome_shortcut_add_title">添加快速访问</string>
+    <string name="chrome_shortcut_name_hint">网站名称</string>
+    <string name="chrome_shortcut_url_hint">网址</string>
+    <string name="chrome_shortcut_name_empty">请输入网站名称</string>
+    <string name="chrome_shortcut_url_empty">请输入网址</string>
+    <string name="chrome_shortcut_confirm">完成</string>
+
+    <!-- 主页设置 -->
+    <string name="chrome_menu_set_homepage">设置主页</string>
+    <string name="chrome_homepage_hint">请输入主页地址</string>
+    <string name="chrome_homepage_title">设置主页</string>
+    <string name="chrome_homepage_empty">地址不能为空</string>
+    <string name="chrome_homepage_saved">主页已保存</string>
+
+    <!-- 下载相关 -->
+    <string name="chrome_menu_downloads">下载</string>
+    <string name="chrome_download_title">下载中心</string>
+    <string name="chrome_download_tab_ongoing">下载中</string>
+    <string name="chrome_download_tab_done">已完成</string>
+    <string name="chrome_download_empty">暂无下载任务</string>
+    <string name="chrome_download_open">打开</string>
+    <string name="chrome_download_delete">删除</string>
+    <string name="chrome_download_delete_confirm">确认删除该下载记录？</string>
+    <string name="chrome_download_started">已开始下载</string>
+    <string name="chrome_download_failed">下载失败，请重试</string>
+    <string name="chrome_download_open_fail">无法打开此文件</string>
+    <string name="chrome_download_cancel">取消下载</string>
+    <string name="chrome_download_size_unknown">大小未知</string>
+    <string name="chrome_download_add_title">新建下载任务</string>
+    <string name="chrome_download_add_hint">请输入下载地址</string>
+    <string name="chrome_download_url_empty">下载地址不能为空</string>
+
     <!-- 升级对话框 -->
     <string name="update_title">发现新版本</string>
 

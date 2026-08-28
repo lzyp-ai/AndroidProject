@@ -129,6 +129,22 @@
                 android:text="点我进入浏览器界面" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_home_mine_chrome_browser"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="点我进入 Chrome 风格浏览器" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_home_mine_downloads"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="点我进入下载页面" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_home_mine_image_select"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"

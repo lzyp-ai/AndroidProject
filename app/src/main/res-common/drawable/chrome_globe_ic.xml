@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 地球/网页 favicon 占位图标 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M12,2A10,10 0,1 0,12 22A10,10 0,1 0,12 2Z"
+        android:strokeColor="#5F6368"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2" />
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M2,12H22"
+        android:strokeColor="#5F6368"
+        android:strokeLineCap="round"
+        android:strokeWidth="2" />
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M12,2C9.17,5.67 7.57,8.79 7.57,12C7.57,15.21 9.17,18.33 12,22C14.83,18.33 16.43,15.21 16.43,12C16.43,8.79 14.83,5.67 12,2Z"
+        android:strokeColor="#5F6368"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2" />
+</vector>

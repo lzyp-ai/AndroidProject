@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 地址栏背景：浅灰色圆角矩形，点击有水波纹 -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#1A4285F4">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+            <solid android:color="#F1F3F4" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+            <solid android:color="#F1F3F4" />
+        </shape>
+    </item>
+</ripple>
