@@ -43,16 +43,24 @@
                 tools:text="应用程序发生崩溃" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_crash_download"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                app:srcCompat="@drawable/chrome_download_ic"
+                app:tint="@color/common_icon_color" />
+
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_crash_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
                 android:layout_marginHorizontal="@dimen/dp_10"
                 app:srcCompat="@drawable/share_ic" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_crash_restart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
                 android:layout_marginHorizontal="@dimen/dp_10"
                 app:srcCompat="@drawable/reboot_ic" />
 

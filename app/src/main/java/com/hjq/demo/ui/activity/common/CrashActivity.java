@@ -17,10 +17,13 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.hjq.core.manager.ThreadPoolManager;
 import com.hjq.core.tools.AndroidVersion;
 import com.hjq.demo.R;
@@ -31,6 +34,9 @@ import com.hjq.device.compat.DeviceBrand;
 import com.hjq.device.compat.DeviceMarketName;
 import com.hjq.device.compat.DeviceOs;
 import com.tencent.bugly.library.Bugly;
+
+import java.io.File;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.InetAddress;
@@ -45,20 +51,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2019/06/27
- *    desc   : 崩溃捕捉界面
+ * author : Android 轮子哥
+ * github : https://github.com/getActivity/AndroidProject
+ * time   : 2019/06/27
+ * desc   : 崩溃捕捉界面
  */
 public final class CrashActivity extends AppActivity {
 
     private static final String INTENT_KEY_IN_THROWABLE = "throwable";
 
-    /** 系统包前缀列表 */
+    /**
+     * 系统包前缀列表
+     */
     private static final String[] SYSTEM_PACKAGE_PREFIX_LIST = new String[]
             {"android", "com.android", "androidx", "com.google.android", "java", "javax", "dalvik", "kotlin"};
 
-    /** 报错代码行数正则表达式 */
+    /**
+     * 报错代码行数正则表达式
+     */
     private static final Pattern CODE_REGEX = Pattern.compile("\\(\\w+\\.\\w+:\\d+\\)");
 
     public static void start(@NonNull Application application, @NonNull Throwable throwable) {
@@ -87,7 +97,7 @@ public final class CrashActivity extends AppActivity {
         mInfoLayout = findViewById(R.id.ll_crash_info);
         mInfoView = findViewById(R.id.tv_crash_info);
         mMessageView = findViewById(R.id.tv_crash_message);
-        setOnClickListener(R.id.iv_crash_info, R.id.iv_crash_share, R.id.iv_crash_restart);
+        setOnClickListener(R.id.iv_crash_info, R.id.iv_crash_download, R.id.iv_crash_share, R.id.iv_crash_restart);
 
         // 监听状态栏高度
         observeStatusBarHeight(statusBarHeight -> {
@@ -95,7 +105,7 @@ public final class CrashActivity extends AppActivity {
                 return;
             }
             mInfoLayout.setPadding(mInfoLayout.getPaddingLeft(), statusBarHeight,
-                mInfoLayout.getPaddingRight(), mInfoLayout.getPaddingBottom());
+                    mInfoLayout.getPaddingRight(), mInfoLayout.getPaddingBottom());
         });
     }
 
@@ -262,6 +272,8 @@ public final class CrashActivity extends AppActivity {
         int viewId = view.getId();
         if (viewId == R.id.iv_crash_info) {
             mDrawerLayout.openDrawer(GravityCompat.START);
+        } else if (viewId == R.id.iv_crash_download) {
+            saveCrashLogToFile();
         } else if (viewId == R.id.iv_crash_share) {
             // 分享文本
             Intent intent = new Intent(Intent.ACTION_SEND);
@@ -280,6 +292,51 @@ public final class CrashActivity extends AppActivity {
         // 重启应用
         RestartActivity.restart(this);
         finish();
+    }
+
+    /**
+     * 保存崩溃日志到本地 Download 目录
+     */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void saveCrashLogToFile() {
+        if (TextUtils.isEmpty(mStackTrace)) {
+            Toast.makeText(this, "暂无日志内容", android.widget.Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ThreadPoolManager.getInstance().execute(() -> {
+            try {
+                File dir = android.os.Environment.getExternalStoragePublicDirectory(
+                        android.os.Environment.DIRECTORY_DOWNLOADS);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                // 文件名：crash_年月日_时分秒.txt
+                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
+                        .format(new Date());
+                File file = new File(dir, "crash_" + timestamp + ".txt");
+
+                // 写入设备信息 + 堆栈
+                FileWriter writer = new FileWriter(file);
+                writer.write("=== 崩溃信息 ===\n");
+                writer.write("时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                        Locale.getDefault()).format(new Date()) + "\n");
+                writer.write("应用版本：" + AppConfig.getVersionName()
+                        + " (" + AppConfig.getVersionCode() + ")\n");
+                writer.write("设备型号：" + Build.MODEL + "\n");
+                writer.write("安卓版本：" + Build.VERSION.RELEASE + "\n\n");
+                writer.write("=== 堆栈详情 ===\n");
+                writer.write(mStackTrace);
+                writer.flush();
+                writer.close();
+
+                final String filePath = file.getAbsolutePath();
+                post(() -> android.widget.Toast.makeText(CrashActivity.this,
+                        "已保存到：" + filePath, android.widget.Toast.LENGTH_LONG).show());
+            } catch (Exception e) {
+                post(() -> android.widget.Toast.makeText(CrashActivity.this,
+                        "保存失败：" + e.getMessage(), android.widget.Toast.LENGTH_SHORT).show());
+            }
+        });
     }
 
     /**
