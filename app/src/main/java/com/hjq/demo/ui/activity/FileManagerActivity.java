@@ -199,6 +199,12 @@ public final class FileManagerActivity extends AppActivity {
         // 其余点击由各子 View 自行处理
     }
 
+    @Override
+    public void onRightClick(@NonNull com.hjq.bar.TitleBar titleBar) {
+        // 右侧按钮：打开 FTP 服务管理页
+        com.hjq.demo.ui.activity.common.FtpServerActivity.start(this);
+    }
+
     // -----------------------------------------------------------------------
     // 权限与存储设备加载
     // -----------------------------------------------------------------------

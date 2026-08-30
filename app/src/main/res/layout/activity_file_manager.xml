@@ -15,7 +15,9 @@
         android:id="@+id/tb_file_manager_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="文件管理" />
+        app:title="文件管理"
+        app:rightTitle="@string/ftp_entry_menu_item"
+        app:rightTitleColor="@color/black"/>
 
     <View
         android:layout_width="match_parent"

@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_window_background_color"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_ftp_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_30">
+
+            <!-- ===== 状态卡片 ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_15"
+                android:background="@drawable/ftp_card_bg"
+                android:orientation="vertical">
+
+                <!-- 状态行 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_60"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15">
+
+                    <View
+                        android:id="@+id/v_ftp_status_dot"
+                        android:layout_width="@dimen/dp_10"
+                        android:layout_height="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:background="@drawable/ftp_status_dot_stopped" />
+
+                    <TextView
+                        android:id="@+id/tv_ftp_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ftp_status_stopped"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/sp_17"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btn_ftp_toggle"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_40"
+                        android:background="@drawable/ftp_btn_start_bg"
+                        android:gravity="center"
+                        android:text="@string/ftp_btn_start"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_15" />
+
+                </LinearLayout>
+
+                <!-- 分割线 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:layout_marginHorizontal="@dimen/dp_15"
+                    android:background="@color/common_line_color" />
+
+                <!-- 地址行 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_60"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ftp_address_label"
+                            android:textColor="@color/common_text_hint_color"
+                            android:textSize="@dimen/sp_13" />
+
+                        <TextView
+                            android:id="@+id/tv_ftp_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_3"
+                            android:text="@string/ftp_address_placeholder"
+                            android:textColor="@color/common_text_color"
+                            android:textIsSelectable="true"
+                            android:textSize="@dimen/sp_15" />
+
+                    </LinearLayout>
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/btn_ftp_copy_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_34"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_15"
+                        android:text="@string/ftp_copy"
+                        android:textColor="@color/common_accent_color"
+                        android:textSize="@dimen/sp_14"
+                        app:shape_radius="@dimen/dp_6"
+                        app:shape_strokeColor="@color/common_accent_color"
+                        app:shape_strokeSize="1px" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ===== 配置卡片 ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_15"
+                android:background="@drawable/ftp_card_bg"
+                android:orientation="vertical">
+
+                <!-- 卡片标题 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/dp_15"
+                    android:text="@string/ftp_config_title"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:background="@color/common_line_color" />
+
+                <!-- 端口 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ftp_config_port"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/sp_15" />
+
+                    <TextView
+                        android:id="@+id/tv_ftp_port"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_12"
+                        android:text="2121"
+                        android:textColor="@color/common_text_hint_color"
+                        android:textSize="@dimen/sp_15" />
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/btn_ftp_change_port"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_32"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_12"
+                        android:text="@string/ftp_config_change"
+                        android:textColor="@color/common_accent_color"
+                        android:textSize="@dimen/sp_13"
+                        app:shape_radius="@dimen/dp_6"
+                        app:shape_strokeColor="@color/common_accent_color"
+                        app:shape_strokeSize="1px" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:layout_marginHorizontal="@dimen/dp_15"
+                    android:background="@color/common_line_color" />
+
+                <!-- 用户名 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ftp_config_username"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/sp_15" />
+
+                    <TextView
+                        android:id="@+id/tv_ftp_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_12"
+                        android:text="anonymous"
+                        android:textColor="@color/common_text_hint_color"
+                        android:textSize="@dimen/sp_15" />
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/btn_ftp_change_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_32"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_12"
+                        android:text="@string/ftp_config_change"
+                        android:textColor="@color/common_accent_color"
+                        android:textSize="@dimen/sp_13"
+                        app:shape_radius="@dimen/dp_6"
+                        app:shape_strokeColor="@color/common_accent_color"
+                        app:shape_strokeSize="1px" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:layout_marginHorizontal="@dimen/dp_15"
+                    android:background="@color/common_line_color" />
+
+                <!-- 密码 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ftp_config_password"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/sp_15" />
+
+                    <TextView
+                        android:id="@+id/tv_ftp_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_12"
+                        android:text="@string/ftp_password_none"
+                        android:textColor="@color/common_text_hint_color"
+                        android:textSize="@dimen/sp_15" />
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/btn_ftp_change_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_32"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_12"
+                        android:text="@string/ftp_config_change"
+                        android:textColor="@color/common_accent_color"
+                        android:textSize="@dimen/sp_13"
+                        app:shape_radius="@dimen/dp_6"
+                        app:shape_strokeColor="@color/common_accent_color"
+                        app:shape_strokeSize="1px" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:layout_marginHorizontal="@dimen/dp_15"
+                    android:background="@color/common_line_color" />
+
+                <!-- 共享目录 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/dp_50"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15"
+                    android:paddingVertical="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ftp_config_root_dir"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/sp_15" />
+
+                    <TextView
+                        android:id="@+id/tv_ftp_root_dir"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:maxLines="2"
+                        android:paddingHorizontal="@dimen/dp_10"
+                        android:text="/storage/emulated/0"
+                        android:textColor="@color/common_text_hint_color"
+                        android:textSize="@dimen/sp_13" />
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/btn_ftp_change_root"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_32"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_12"
+                        android:text="@string/ftp_config_change"
+                        android:textColor="@color/common_accent_color"
+                        android:textSize="@dimen/sp_13"
+                        app:shape_radius="@dimen/dp_6"
+                        app:shape_strokeColor="@color/common_accent_color"
+                        app:shape_strokeSize="1px" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:layout_marginHorizontal="@dimen/dp_15"
+                    android:background="@color/common_line_color" />
+
+                <!-- 匿名登录 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ftp_config_anonymous"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/sp_15" />
+
+                    <Switch
+                        android:id="@+id/sw_ftp_anonymous"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:layout_marginHorizontal="@dimen/dp_15"
+                    android:background="@color/common_line_color" />
+
+                <!-- 匿名可写 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ftp_config_anonymous_write"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/sp_15" />
+
+                    <Switch
+                        android:id="@+id/sw_ftp_anonymous_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:enabled="false"
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ===== 日志卡片 ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_15"
+                android:background="@drawable/ftp_card_bg"
+                android:orientation="vertical">
+
+                <!-- 标题行 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/ftp_log_title"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold" />
+
+                    <com.hjq.shape.view.ShapeTextView
+                        android:id="@+id/btn_ftp_clear_log"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_30"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_12"
+                        android:text="@string/ftp_log_clear"
+                        android:textColor="@color/common_text_hint_color"
+                        android:textSize="@dimen/sp_13"
+                        app:shape_radius="@dimen/dp_6"
+                        app:shape_strokeColor="@color/common_line_color"
+                        app:shape_strokeSize="1px" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:background="@color/common_line_color" />
+
+                <!-- 日志文本：用独立 ScrollView 包裹，避免被外层 NestedScrollView 拦截滚动 -->
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_160"
+                    android:background="@drawable/ftp_log_bg"
+                    android:fadeScrollbars="false"
+                    android:nestedScrollingEnabled="false"
+                    android:scrollbars="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_ftp_log"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|start"
+                        android:padding="@dimen/dp_12"
+                        android:text="@string/ftp_log_empty"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/sp_13" />
+
+                </ScrollView>
+
+            </LinearLayout>
+
+            <!-- ===== 使用说明卡片 ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_15"
+                android:background="@drawable/ftp_card_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/dp_15"
+                    android:text="@string/ftp_help_title"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:background="@color/common_line_color" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1.7"
+                    android:padding="@dimen/dp_15"
+                    android:text="@string/ftp_help_content"
+                    android:textColor="@color/common_text_hint_color"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

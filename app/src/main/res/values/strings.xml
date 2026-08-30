@@ -76,6 +76,69 @@
     <string name="chrome_download_add_hint">请输入下载地址</string>
     <string name="chrome_download_url_empty">下载地址不能为空</string>
 
+    <!-- FTP 服务端 -->
+    <string name="ftp_title">FTP 文件服务</string>
+
+    <!-- 状态 -->
+    <string name="ftp_status_stopped">服务未运行</string>
+    <string name="ftp_status_running">服务运行中</string>
+
+    <!-- 按钮 -->
+    <string name="ftp_btn_start">启动服务</string>
+    <string name="ftp_btn_stop">停止服务</string>
+
+    <!-- 地址栏 -->
+    <string name="ftp_address_label">局域网访问地址</string>
+    <string name="ftp_address_placeholder">启动服务后显示</string>
+    <string name="ftp_copy">复制</string>
+    <string name="ftp_copy_success">地址已复制到剪贴板</string>
+    <string name="ftp_copy_no_address">请先启动 FTP 服务</string>
+
+    <!-- 配置 -->
+    <string name="ftp_config_title">服务配置</string>
+    <string name="ftp_config_port">端口号</string>
+    <string name="ftp_config_username">用户名</string>
+    <string name="ftp_config_password">密码</string>
+    <string name="ftp_config_root_dir">共享目录</string>
+    <string name="ftp_config_anonymous">允许匿名登录</string>
+    <string name="ftp_config_anonymous_write">匿名用户可上传/删除</string>
+    <string name="ftp_config_change">修改</string>
+    <string name="ftp_config_change_while_running">请先停止服务再修改配置</string>
+
+    <!-- 输入提示 -->
+    <string name="ftp_port_hint">端口范围 1024 ~ 65535</string>
+    <string name="ftp_port_invalid">端口号无效，请输入 1024 ~ 65535 之间的数字</string>
+    <string name="ftp_username_hint">请输入用户名</string>
+    <string name="ftp_username_empty">用户名不能为空</string>
+    <string name="ftp_password_hint">留空表示无需密码</string>
+    <string name="ftp_password_none">无</string>
+    <string name="ftp_root_dir_hint">请输入共享目录的绝对路径</string>
+    <string name="ftp_root_dir_empty">目录路径不能为空</string>
+    <string name="ftp_root_dir_invalid">目录不存在或无法访问</string>
+
+    <!-- 启动 / 停止 -->
+    <string name="ftp_starting">FTP 服务正在启动…</string>
+    <string name="ftp_stop_confirm_title">停止服务</string>
+    <string name="ftp_stop_confirm_msg">停止后所有已连接的客户端将断开，确认停止？</string>
+
+    <!-- 日志 -->
+    <string name="ftp_log_title">连接日志</string>
+    <string name="ftp_log_clear">清空</string>
+    <string name="ftp_log_empty">暂无日志</string>
+
+    <!-- 使用说明 -->
+    <string name="ftp_help_title">使用说明</string>
+    <string name="ftp_help_content">1. 确保手机与电脑处于同一 Wi-Fi 网络\n2. 点击「启动服务」，将显示访问地址\n3. 在电脑文件管理器地址栏输入该地址即可访问\n4. Windows：Win + R → 输入地址，或在文件管理器地址栏直接粘贴\n5. macOS：Finder → 前往 → 连接服务器 → 粘贴地址\n6. 开启「匿名登录」时任意用户名均可登录，无需密码\n7. FTP 服务以前台服务形式运行，退出应用后仍可访问</string>
+
+    <!-- 文件管理入口 -->
+    <string name="ftp_entry_menu_item">FTP 文件服务</string>
+
+    <!-- 通知 -->
+    <string name="ftp_notification_channel_name">FTP 文件服务</string>
+    <string name="ftp_notification_channel_desc">FTP 服务运行时保持通知</string>
+    <string name="ftp_notification_title">FTP 服务运行中</string>
+    <string name="ftp_notification_text">正在监听端口 %d，点击管理</string>
+
     <!-- 升级对话框 -->
     <string name="update_title">发现新版本</string>
 

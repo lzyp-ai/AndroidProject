@@ -9,6 +9,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- 前台服务权限（Android 9+）-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- 数据同步类前台服务（Android 14+）-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
     <!-- 发送通知权限（Android 13.0 新增的权限）-->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
@@ -280,6 +285,20 @@
             android:name=".ui.activity.StatusActivity"
             android:launchMode="singleTop"
             android:screenOrientation="landscape" />
+
+        <!-- FTP 服务端管理页 -->
+        <activity
+            android:name=".ui.activity.common.FtpServerActivity"
+            android:label="@string/ftp_title"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+
+        <!-- FTP 前台服务 -->
+        <service
+            android:name=".ftp.FtpServerService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
 
     </application>
 
