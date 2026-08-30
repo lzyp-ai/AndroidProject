@@ -58,33 +58,52 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+
 /**
  * FTP 服务端（前台 Service）
  *
- * 修复清单 v2：
- *  - [fix] startFtp 重启逻辑全部移到工作线程，主线程零阻塞，消除 ANR 风险
- *  - [fix] mRunning 改为 AtomicBoolean，CAS 操作保证可见性与原子性
- *  - [fix] forceClose + finally 双减竞态：用 AtomicBoolean mFinallyRan 保证 finally 只执行一次减法
- *  - [fix] 匿名模式双 230：USER 只发 331/230-anon，统一由 PASS 完成登录状态设置
- *  - [fix] handlePasv/handleEpsv 时清空 mPortHost/mPortPort，handlePort 时关闭旧 PasvServer
- *  - [fix] sFileLocks 改为实例级 ConcurrentHashMap + DELE/STOR 完成后移除锁对象，防内存泄漏
- *  - [fix] transfer 循环加入 mStopping/mClosed 检查，大文件可及时中断
- *  - ServerConfig 快照，Session 创建时固定配置
- *  - STOP 主动关闭所有 ClientSession
- *  - ThreadPoolExecutor 有界限制（最大 20 并发）
- *  - 数据连接 idle timeout（60s）
- *  - sendRaw() 失败标记 session 断开
- *  - RETR 用 RandomAccessFile.seek()
- *  - RMD 非递归（只能删空目录）
- *  - Anonymous 默认只读
- *  - RNTO 目录移动自身检测
- *  - STOR/APPE 文件级锁防并发覆盖
- *  - 登录失败限速（同 IP 5 次失败封禁 5 分钟）
- *  - STAT 不泄露真实 root 路径
- *  - FTP 命令最大长度 4096 字节
- *  - backup/part 残留文件服务启动时自动清理
- *  - service 重新 START 时若已运行先停再重启
- *  - stopFtp() 幂等保护
+ * 原始地址：https://github.com/hxcan/ftpserver/tree/master
+ *
+ * 基于原生 ServerSocket + 线程池的轻量 FTP Server，常驻前台通知栏运行。
+ * 支持账号密码 / 匿名两种登录，PASV / EPSV / PORT 三种数据连接模式，
+ * REST 断点续传、UTF-8、SIZE / MDTM / AVBL 等扩展命令。
+ *
+ * 并发模型：
+ *  - 启动、重启、停止与连接处理全部在工作线程池执行，主线程零阻塞；
+ *  - ThreadPoolExecutor 有界限制（最大 20 并发 + 50 等待队列），超限拒绝新连接并回包 421；
+ *  - 状态（mRunning / mStopping / mStarting 等）使用原子类型，CAS 保证可见性与原子性；
+ *  - 生命周期版本号 mLifecycleVersion：使已排队但已失效的旧 START 请求自动作废；
+ *  - 所有 ClientSession 注册于 mSessions，STOP 时统一主动 forceClose；
+ *  - 连接计数通过 mFinallyRan 保证只减一次，避免 forceClose 与 run() finally 双减竞态。
+ *
+ * 配置管理：
+ *  - ServerConfig 为不可变快照，Session 创建时固定，运行期间不受外部参数变更影响；
+ *  - stopFtp() 幂等；重新 START 时若旧实例仍在运行，先在工作线程停止并等待其退出再重启。
+ *
+ * 传输可靠性：
+ *  - RETR 使用 RandomAccessFile.seek() 支持 REST 断点续传；
+ *  - STOR / APPE 先写入 .part 临时文件，再原子替换（备份→替换→删备份，失败自动回滚）；
+ *  - STOR / APPE 按文件绝对路径加锁（mFileLocks）防止并发覆盖，传输完成后移除锁对象；
+ *  - 传输循环检查 mStopping / mClosed，停止后大文件传输可及时中断；
+ *  - 数据连接 60s idle timeout，PASV 监听 15s 超时；
+ *  - 服务启动时自动递归清理 .ftp-backup- / .part 残留临时文件。
+ *
+ * 安全防护：
+ *  - resolvePath 基于 canonical path 校验，阻止路径越界（.. 逃逸）访问 rootDir 之外；
+ *  - 登录失败限速：同 IP 连续 5 次失败封禁 5 分钟（进程级，服务重启仍保留）；
+ *  - 匿名用户默认只读，anonymousWrite=false 时写操作返回 550；
+ *  - FTP 命令最大长度 4096 字节，超长返回 500 并跳过；
+ *  - PORT 主机必须与控制连接 IP 一致，端口限制在 1024~65535；
+ *  - STAT 只暴露虚拟路径（Root: /），不泄露真实 root 路径。
+ *
+ * 文件操作约束：
+ *  - RMD 非递归，仅允许删除空目录，禁止删除根目录；
+ *  - RNTO 拒绝将目录移动进自身，且不允许用目录覆盖已有目录；
+ *  - sendRaw() 失败即标记会话断开，控制连接异常时及时退出。
+ *
+ * 命令覆盖：USER PASS SYST FEAT OPTS NOOP QUIT TYPE PWD/XPWD CWD/XCWD CDUP/XCUP
+ *  PASV EPSV PORT LIST NLST STAT RETR SIZE MDTM REST AVBL ABOR STOR APPE STOU
+ *  DELE MKD/XMKD RMD/XRMD RNFR RNTO。
  */
 public class FtpServerService extends Service {
 

@@ -30,13 +30,6 @@ import java.util.Enumeration;
  * author : Android 轮子哥
  * desc   : FTP 服务端管理界面
  *
- * 修复清单：
- *  - [fix] startFtpServer() 补上缺失的 anonymousWrite 参数，消除编译错误
- *  - [fix] 增加 anonymousWrite 配置项（独立 Switch）及持久化
- *  - [fix] 注册 OnStateListener，由 Service 状态回调驱动 UI 刷新，不再盲目 postDelayed
- *  - [fix] startFtpServer() 去掉延迟 bindService 逻辑，BIND_AUTO_CREATE 已保证连接
- *  - [fix] initView 里的匿名开关联动与 refreshUi 统一，不再重复设置 enabled
- *  - [fix] appendLog 调用路径已在 Service 侧 post 到主线程，Activity 侧不重复 post
  */
 public final class FtpServerActivity extends AppActivity {
 
